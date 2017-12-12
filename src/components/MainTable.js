@@ -18,6 +18,9 @@ class MainTable extends Component {
       ? this.setState({ data: this.props.allTimeData })
       : this.setState({ data: this.props.thirtyDayData });
   }
+  changeUser() {
+    this.props.changeUser();
+  }
   render() {
     return (
       <div className="main-table-component">
@@ -35,7 +38,10 @@ class MainTable extends Component {
             </tbody>
           </table>
         </div>
-        <Footer name="Vitalii Kulyk" />
+        <Footer
+          changeUser={this.changeUser.bind(this)}
+          name={this.props.name}
+        />
       </div>
     );
   }
