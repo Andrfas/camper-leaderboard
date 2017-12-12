@@ -1,0 +1,9 @@
+.filter-title{
+  color: green;
+  text-decoration: underline;
+}
+
+.selected-filter:after{
+  content: ' \25bc';
+  font-size: 14px;
+}
