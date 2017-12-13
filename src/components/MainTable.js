@@ -9,17 +9,12 @@ import { constFilterType } from "../const/const.js";
 class MainTable extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      data: this.props.allTimeData
-    };
+  }
+  componentDidMount() {
+    this.props.fetchPosts(constFilterType.allTime);
   }
   onFilterClick(type) {
-    type === constFilterType.allTime
-      ? this.setState({ data: this.props.allTimeData })
-      : this.setState({ data: this.props.thirtyDayData });
-  }
-  changeUser() {
-    this.props.changeUser();
+    this.props.fetchPosts(type);
   }
   render() {
     return (
@@ -32,16 +27,13 @@ class MainTable extends Component {
           <table cellSpacing="0" cellPadding="0">
             <tbody>
               <FilterRow onFilterClick={this.onFilterClick.bind(this)} />
-              {this.state.data.map((rowData, i) => (
+              {this.props.usersData ? this.props.usersData.map((rowData, i) => (
                 <SimpleRow rowData={rowData} key={i} number={i} />
-              ))}
+              )): "Loading.."}
             </tbody>
           </table>
         </div>
-        <Footer
-          changeUser={this.changeUser.bind(this)}
-          name={this.props.name}
-        />
+        <Footer name={this.props.name} />
       </div>
     );
   }

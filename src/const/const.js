@@ -1,5 +1,8 @@
 var constApi = {
-    path: 'https://www.freecodecamp.org/'
+    path: 'https://www.freecodecamp.org/',
+    pathToApi: "https://fcctop100.herokuapp.com/api/fccusers/top/",
+    recent: "recent",
+    allTime: "alltime"
 };
 
 export var constFilterType = {

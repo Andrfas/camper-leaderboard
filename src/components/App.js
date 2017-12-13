@@ -4,40 +4,50 @@ import "../styles/App.css";
 import MainTable from "./MainTable";
 
 import { connect } from "react-redux";
-import { bindActionCreators } from 'redux'
 
-import * as loadActions from '../actions/loadActions.js';
-
+import {
+  fetchPosts,
+  fetchPostsSuccess,
+  fetchPostsFailure
+} from "../actions/loadActions.js";
 
 class App extends Component {
-  changeUser(){
-    let name = "Kate Porodianno";
-    this.props.loadActions.changeUser(name);
+  fetchPosts(type){
+    this.props.fetchPosts(type);
   }
   render() {
     return (
       <div className="App">
         <MainTable
-          thirtyDayData={this.props.thirtyDayData}
-          allTimeData={this.props.allTimeData}
           name={this.props.users.currentUser}
-          changeUser = {this.changeUser.bind(this)}
+          fetchPosts={this.fetchPosts.bind(this)}
+          usersData={this.props.users.usersData}
         />
       </div>
     );
   }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = state => {
   return {
     users: state.users
   };
-}
+};
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = dispatch => {
   return {
-    loadActions: bindActionCreators(loadActions, dispatch)
-  }
-}
+    fetchPosts: (type) => {
+      debugger
+      dispatch(fetchPosts(type)).then(responce => {
+        let data = responce.payload.data
+          ? responce.payload.data
+          : { data: "Network Error" };
+        !responce.error
+          ? dispatch(fetchPostsSuccess(data))
+          : dispatch(fetchPostsFailure(data));
+      });
+    }
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
