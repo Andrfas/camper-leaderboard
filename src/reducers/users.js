@@ -11,7 +11,7 @@ const initialState = {
 export default function page(state = initialState, action) {
   let error;
   switch (action.type) {
-    case actions.GET_USERS: {
+    case actions.GET_USERS:
       return {
         ...state,
         allUsersData: [],
@@ -19,26 +19,22 @@ export default function page(state = initialState, action) {
         error: false,
         loading: true
       };
-    }
 
-    case actions.GET_USERS_SUCCESS: {
+    case actions.GET_USERS_SUCCESS:
       return {
         ...state,
         usersData: action.payload,
         error: null,
         loading: false
       };
-    }
 
-    case actions.GET_USERS_FAILURE: {
+    case actions.GET_USERS_FAILURE:
       error = action.payload || { message: action.payload.message };
       return {
         ...state,
         usersData: [],
-        error: true,
         loading: false
       };
-    }
 
     default:
       return state;

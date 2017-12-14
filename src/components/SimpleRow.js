@@ -4,7 +4,7 @@ import "../styles/SimpleRow.css";
 import constApi from "../const/const";
 
 class SimpleRow extends Component {
-  render() {
+  render = () => {
     let rowData = this.props.rowData;
     return (
       <tr className="simple-row-component">

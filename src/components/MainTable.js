@@ -7,33 +7,34 @@ import "../styles/MainTable.css";
 import { constFilterType } from "../const/const.js";
 
 class MainTable extends Component {
-  constructor(props) {
-    super(props);
-  }
-  componentDidMount() {
+  componentDidMount = () => {
     this.props.fetchPosts(constFilterType.allTime);
   }
-  onFilterClick(type) {
+  onFilterClick = (type) => {
     this.props.fetchPosts(type);
   }
-  render() {
+  render = () => {
     return (
       <div className="main-table-component">
-        <div className="header" />
-        <div className="main-table">
-          <div className="header">
-            <span className="header-text">Leaderboard</span>
+        {this.props.usersData && (
+          <div>
+            <div className="header" />
+            <div className="main-table">
+              <div className="header">
+                <span className="header-text">Leaderboard</span>
+              </div>
+              <table cellSpacing="0" cellPadding="0">
+                <tbody>
+                  <FilterRow onFilterClick={this.onFilterClick.bind(this)} />
+                  {this.props.usersData.map((rowData, i) => (
+                    <SimpleRow rowData={rowData} key={i} number={i} />
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <Footer name={this.props.name} />
           </div>
-          <table cellSpacing="0" cellPadding="0">
-            <tbody>
-              <FilterRow onFilterClick={this.onFilterClick.bind(this)} />
-              {this.props.usersData ? this.props.usersData.map((rowData, i) => (
-                <SimpleRow rowData={rowData} key={i} number={i} />
-              )): "Loading.."}
-            </tbody>
-          </table>
-        </div>
-        <Footer name={this.props.name} />
+        )}
       </div>
     );
   }

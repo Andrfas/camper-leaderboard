@@ -10,13 +10,15 @@ class FilterRow extends Component {
       type: constFilterType.allTime
     };
   }
-  onFilterClick(type) {
-    if (typeof this.props.onFilterClick === "function") {
-      this.setState({ type: type });
-      this.props.onFilterClick(type);
+  onFilterClick = type => {
+    if (type !== this.state.type){
+      if (typeof this.props.onFilterClick === "function") {
+        this.setState({ type: type });
+        this.props.onFilterClick(type);
+      }
     }
   }
-  render() {
+  render = () => {
     return (
       <tr className="filter-row-component">
         <th className="number">#</th>
