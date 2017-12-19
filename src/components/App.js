@@ -14,8 +14,8 @@ import {
 class App extends Component {
   fetchPosts = type => {
     this.props.fetchPosts(type);
-  }
-  render = () => {
+  };
+  render() {
     return (
       <div className="App">
         <MainTable
@@ -36,7 +36,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchPosts: (type) => {
+    fetchPosts: type => {
       dispatch(fetchPosts(type)).then(responce => {
         let data = responce.payload.data
           ? responce.payload.data

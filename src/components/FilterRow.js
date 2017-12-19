@@ -11,21 +11,26 @@ class FilterRow extends Component {
     };
   }
   onFilterClick = type => {
-    if (type !== this.state.type){
+    if (type !== this.state.type) {
       if (typeof this.props.onFilterClick === "function") {
         this.setState({ type: type });
         this.props.onFilterClick(type);
       }
     }
-  }
-  render = () => {
+  };
+  render() {
+    const {type} = this.state;
     return (
       <tr className="filter-row-component">
         <th className="number">#</th>
         <th>Campname</th>
         <th className="filter-title" ref="recent">
           <span
-            className={this.state.type === constFilterType.recent ? "selected-filter" : ""}
+            className={
+              type === constFilterType.recent
+                ? "selected-filter"
+                : ""
+            }
             onClick={this.onFilterClick.bind(this, constFilterType.recent)}
           >
             Points in past 30 days
@@ -33,7 +38,11 @@ class FilterRow extends Component {
         </th>
         <th className="filter-title" ref="allTime">
           <span
-            className={this.state.type === constFilterType.allTime? 'selected-filter' : ''}
+            className={
+              this.state.type === constFilterType.allTime
+                ? "selected-filter"
+                : ""
+            }
             onClick={this.onFilterClick.bind(this, constFilterType.allTime)}
           >
             All time points
