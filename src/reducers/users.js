@@ -4,37 +4,42 @@ const initialState = {
   currentUser: "Vitalii Kulyk",
   allUsersData: [],
   recentUsersData: [],
-  loading: false,
+  isFetching: false,
   error: false
 };
 
-export default function page(state = initialState, action) {
-  let error;
+export default function users(state = initialState, action) {
   switch (action.type) {
     case actions.GET_USERS:
-      return {
-        ...state,
-        allUsersData: [],
-        recentUsersData: [],
-        error: false,
-        loading: true
-      };
+      return Object.assign({}, state, {
+        isFetching: true,
+        error: false
+      });
+
+    case actions.GET_RECENT_USERS:
+      return Object.assign({}, state, {
+        isFetching: true,
+        error: false
+      });
 
     case actions.GET_USERS_SUCCESS:
-      return {
-        ...state,
-        usersData: action.payload,
-        error: null,
-        loading: false
-      };
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: false,
+        allUsersData: action.users
+      });
+
+    case actions.GET_RECENT_USERS_SUCCESS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: false,
+        recentUsersData: action.users
+      });
 
     case actions.GET_USERS_FAILURE:
-      error = action.payload || { message: action.payload.message };
-      return {
-        ...state,
-        usersData: [],
-        loading: false
-      };
+      return Object.assign({}, state, {
+        error: true
+      });
 
     default:
       return state;

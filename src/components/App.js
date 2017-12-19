@@ -5,23 +5,44 @@ import MainTable from "./MainTable";
 
 import { connect } from "react-redux";
 
-import {
-  fetchPosts,
-  fetchPostsSuccess,
-  fetchPostsFailure
-} from "../actions/loadActions.js";
+import { fetchUsers, fetchRecentUsers } from "../actions/loadActions";
+
+import { constFilterType } from "../const/const.js";
 
 class App extends Component {
-  fetchPosts = type => {
-    this.props.fetchPosts(type);
-  };
+  constructor(props) {
+    super(props);
+    this.fetchUsers = this.fetchUsers.bind(this);
+    this.fetchRecentUsers = this.fetchRecentUsers.bind(this);
+    this.filterClick = this.filterClick.bind(this);
+    this.state = {
+      type: constFilterType.allTime
+    };
+  }
+  filterClick(type) {
+    type == constFilterType.allTime
+      ? this.fetchUsers()
+      : this.fetchRecentUsers();
+  }
+  fetchUsers() {
+    this.props.dispatch(fetchUsers());
+    this.setState({ type: constFilterType.allTime });
+  }
+  fetchRecentUsers() {
+    this.props.dispatch(fetchRecentUsers());
+    this.setState({ type: constFilterType.recent });
+  }
   render() {
     return (
       <div className="App">
         <MainTable
           name={this.props.users.currentUser}
-          fetchPosts={this.fetchPosts.bind(this)}
-          usersData={this.props.users.usersData}
+          usersData={
+            this.state.type == constFilterType.allTime
+              ? this.props.users.allUsersData
+              : this.props.users.recentUsersData
+          }
+          filterClick={this.filterClick}
         />
       </div>
     );
@@ -34,19 +55,4 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchPosts: type => {
-      dispatch(fetchPosts(type)).then(responce => {
-        let data = responce.payload.data
-          ? responce.payload.data
-          : { data: "Network Error" };
-        !responce.error
-          ? dispatch(fetchPostsSuccess(data))
-          : dispatch(fetchPostsFailure(data));
-      });
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);

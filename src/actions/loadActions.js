@@ -1,28 +1,62 @@
-import axios from "axios";
-import constApi, { constFilterType } from "../const/const";
+import constApi from "../const/const";
 import actions from "../const/actions";
 
-export let fetchPosts = type => {
-  let url = constApi.pathToApi;
-  let method =
-    type === constFilterType.allTime ? constApi.allTime : constApi.recent;
-  const request = axios.get(url + method);
+function requestUsers() {
   return {
-    type: actions.GET_USERS,
-    payload: request
+    type: actions.GET_USERS
   };
 }
 
-export let fetchPostsSuccess = posts => {
+function requestRecentUsers() {
+  return {
+    type: actions.GET_RECENT_USERS
+  };
+}
+
+function receiveUsersSuccess(data) {
   return {
     type: actions.GET_USERS_SUCCESS,
-    payload: posts
+    users: data
   };
 }
 
-export let fetchPostsFailure = error => {
+function receiveRecentUsersSuccess(data) {
   return {
-    type: actions.GET_USERS_FAILURE,
-    payload: error
+    type: actions.GET_RECENT_USERS_SUCCESS,
+    users: data
+  };
+}
+
+function receiveUsersFailure(error) {
+  return {
+    type: actions.GET_USERS_FAILURE
+  };
+}
+
+export function fetchUsers() {
+  let url = constApi.pathToApi;
+  let method = constApi.allTime;
+  return function(dispatch) {
+    dispatch(requestUsers);
+    return fetch(url + method)
+      .then(
+        response => response.json(),
+        error => console.log("an error occured ", error)
+      )
+      .then(json => dispatch(receiveUsersSuccess(json)));
+  };
+}
+
+export function fetchRecentUsers(){
+  let url = constApi.pathToApi;
+  let method = constApi.recent;
+  return function(dispatch) {
+    dispatch(requestUsers);
+    return fetch(url + method)
+      .then(
+        response => response.json(),
+        error => console.log("an error occured ", error)
+      )
+      .then(json => dispatch(receiveRecentUsersSuccess(json)));
   };
 }

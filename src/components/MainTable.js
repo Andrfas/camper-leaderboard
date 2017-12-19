@@ -7,13 +7,19 @@ import "../styles/MainTable.css";
 import { constFilterType } from "../const/const.js";
 
 class MainTable extends Component {
-  componentDidMount = () => {
-    this.props.fetchPosts(constFilterType.allTime);
+  constructor(props) {
+    super(props);
+    this.state = {
+      type: constFilterType.allTime
+    }
   }
-  onFilterClick = (type) => {
-    this.props.fetchPosts(type);
-  }
-  render = () => {
+  onFilterClick = type => {
+    if (this.state.type != type){
+      this.props.filterClick(type);
+      this.setState({type: type});
+    }
+  };
+  render() {
     return (
       <div className="main-table-component">
         {this.props.usersData && (

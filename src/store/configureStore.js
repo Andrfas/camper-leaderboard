@@ -1,14 +1,11 @@
 import { createStore, applyMiddleware } from "redux";
 import rootReducer from "../reducers";
-import promise from 'redux-promise';
+import thunkMiddleware from "redux-thunk";
+import { fetchUsers } from "../actions/loadActions";
 
 export default function configureStore(initialState) {
+  const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
-  const createStoreWithMiddleware = applyMiddleware(
-    promise
-  )(createStore);
-  const store = createStoreWithMiddleware(rootReducer, initialState,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
-    
+  store.dispatch(fetchUsers()).then(() => console.log(store.getState()));
   return store;
 }
