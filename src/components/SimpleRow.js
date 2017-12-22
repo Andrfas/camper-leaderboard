@@ -1,14 +1,16 @@
 import React, { Component } from "react";
 
 import "../styles/SimpleRow.css";
-import constApi from "../const/const";
+import constApi from "../const/api";
+
+import PropTypes from "prop-types";
 
 class SimpleRow extends Component {
   render() {
-    let rowData = this.props.rowData;
+    const {rowData, number} = this.props;
     return (
       <tr className="simple-row-component">
-        <td className="number">{this.props.number + 1}</td>
+        <td className="number">{number + 1}</td>
         <td className="camp-name">
           <img
             className="logo-img"
@@ -26,6 +28,11 @@ class SimpleRow extends Component {
       </tr>
     );
   }
+}
+
+SimpleRow.propTypes = {
+  rowData: PropTypes.object,
+  number: PropTypes.number
 }
 
 export default SimpleRow;

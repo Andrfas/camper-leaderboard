@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import "../styles/App.css";
-
 import MainTable from "./MainTable";
-
 import { connect } from "react-redux";
 
-import { fetchUsers, fetchRecentUsers } from "../actions/loadActions";
-
-import { constFilterType } from "../const/const.js";
+import { fetchUsers, fetchRecentUsers } from "../modules/users";
+import { constFilterType } from "../const/api";      
+import PropTypes from "prop-types";
 
 class App extends Component {
   constructor(props) {
@@ -19,10 +17,10 @@ class App extends Component {
       type: constFilterType.allTime
     };
   }
-  filterClick(type) {
-    type == constFilterType.allTime
-      ? this.fetchUsers()
-      : this.fetchRecentUsers();
+  filterClick(type){
+    type === constFilterType.allTime
+    ? this.fetchUsers()
+    : this.fetchRecentUsers();
   }
   fetchUsers() {
     this.props.dispatch(fetchUsers());
@@ -38,7 +36,7 @@ class App extends Component {
         <MainTable
           name={this.props.users.currentUser}
           usersData={
-            this.state.type == constFilterType.allTime
+            this.state.type === constFilterType.allTime
               ? this.props.users.allUsersData
               : this.props.users.recentUsersData
           }
@@ -47,6 +45,10 @@ class App extends Component {
       </div>
     );
   }
+}
+
+App.propTypes = {
+  users: PropTypes.object
 }
 
 const mapStateToProps = state => {

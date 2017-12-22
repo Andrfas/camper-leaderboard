@@ -1,11 +1,15 @@
-import { createStore, applyMiddleware } from "redux";
-import rootReducer from "../reducers";
+import { createStore, applyMiddleware, combineReducers } from "redux";
 import thunkMiddleware from "redux-thunk";
-import { fetchUsers } from "../actions/loadActions";
+import { fetchUsers } from "../modules/users";
+import users from "../modules/users";
 
 export default function configureStore(initialState) {
+  const rootReducer = combineReducers({
+    users
+  });
+
   const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
-  store.dispatch(fetchUsers()).then(() => console.log(store.getState()));
+  store.dispatch(fetchUsers());
   return store;
 }

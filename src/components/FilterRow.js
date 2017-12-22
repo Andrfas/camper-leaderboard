@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 
 import "../styles/FilterRow.css";
-import { constFilterType } from "../const/const.js";
+import { constFilterType } from "../const/api";
+import PropTypes from "prop-types";
+
 
 class FilterRow extends Component {
   constructor(props) {
@@ -39,7 +41,7 @@ class FilterRow extends Component {
         <th className="filter-title" ref="allTime">
           <span
             className={
-              this.state.type === constFilterType.allTime
+              type === constFilterType.allTime
                 ? "selected-filter"
                 : ""
             }
@@ -51,6 +53,10 @@ class FilterRow extends Component {
       </tr>
     );
   }
+}
+
+FilterRow.propTypes = {
+  onFilterClick: PropTypes.func    
 }
 
 export default FilterRow;

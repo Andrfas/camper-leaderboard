@@ -4,7 +4,8 @@ import SimpleRow from "./SimpleRow";
 import Footer from "./Footer";
 
 import "../styles/MainTable.css";
-import { constFilterType } from "../const/const.js";
+import { constFilterType } from "../const/api";
+import PropTypes from "prop-types";
 
 class MainTable extends Component {
   constructor(props) {
@@ -14,11 +15,16 @@ class MainTable extends Component {
     }
   }
   onFilterClick = type => {
-    if (this.state.type != type){
+    if (this.state.type !== type){
       this.props.filterClick(type);
       this.setState({type: type});
     }
-  };
+  }
+  get simpleRows(){
+    return this.props.usersData.map((rowData, i) => (
+      <SimpleRow rowData={rowData} key={i} number={i} />
+    ))
+  }
   render() {
     return (
       <div className="main-table-component">
@@ -32,9 +38,7 @@ class MainTable extends Component {
               <table cellSpacing="0" cellPadding="0">
                 <tbody>
                   <FilterRow onFilterClick={this.onFilterClick.bind(this)} />
-                  {this.props.usersData.map((rowData, i) => (
-                    <SimpleRow rowData={rowData} key={i} number={i} />
-                  ))}
+                  {this.simpleRows}
                 </tbody>
               </table>
             </div>
@@ -44,6 +48,11 @@ class MainTable extends Component {
       </div>
     );
   }
+}
+
+MainTable.propTypes = {
+  filterClick: PropTypes.func,
+  usersData: PropTypes.array
 }
 
 export default MainTable;

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import "../styles/Footer.css";
 
+import PropTypes from "prop-types";
+
 class Footer extends Component {
   render() {
     return (
@@ -10,6 +12,10 @@ class Footer extends Component {
       </div>
     );
   }
+}
+
+Footer.propTypes = {
+  name: PropTypes.string    
 }
 
 export default Footer;

@@ -8,5 +8,6 @@ const constApi = {
 export const constFilterType = {
     allTime: 0,
     recent: 1
-};;
+};
+
 export default constApi;
