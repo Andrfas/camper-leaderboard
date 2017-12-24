@@ -1,0 +1,61 @@
+.header {
+  background: #006400;
+  height: 50px;
+}
+
+table {
+  width: 100%;
+  border: 1px solid;
+  border-radius: 2px;
+}
+
+tr {
+  height: 60px;
+  background: #f0f0f0;
+  font-size: 16px;
+
+  &:nth-child(2n) {
+    background: white;
+  }
+}
+
+td,
+th {
+  border: 1px solid #ddd;
+}
+
+.main-table {
+  width: 80%;
+  margin: 0 auto;
+  display: table;
+
+  .header-text {
+    color: white;
+    font-size: 26px;
+    vertical-align: middle;
+  }
+
+  .header {
+    margin-top: 50px;
+    border-radius: 10px 10px 0 0;
+    line-height: 50px;
+  }
+}
+
+.footer-component {
+  margin-top: 20px;
+  background: #006400;
+  height: 50px;
+  padding: 10px;
+}
+
+.first-cell {
+  text-align: left;
+  padding-left: 20px;
+}
+
+.number {
+    width: 5%;
+    text-align: left;
+    padding-left: 15px;
+  }
